@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import {
+  Component, OnInit, ViewChild, ElementRef,
+  Input, Output, EventEmitter
+} from '@angular/core';
 declare const google: any;
 @Component({
   selector: 'ngx-google-map',
@@ -7,34 +9,35 @@ declare const google: any;
   styleUrls: ['./ngx-google-maps.component.scss']
 })
 export class NgxGoogleMapComponent implements OnInit {
+
+  @Input() public mapType: string = 'ROADMAP';
+  @Input() public multiplePlaces: boolean = false;
+  @Output() public mapClick: EventEmitter<any> = new EventEmitter();
+  @Output() public markerClick: EventEmitter<any> = new EventEmitter();
+  @Output() public locationSelected: EventEmitter<any> = new EventEmitter();
   @ViewChild('map') private mapElement: ElementRef;
   @ViewChild('searchBox') private searchInput: ElementRef;
   @ViewChild('doneBtn') private doneButton: ElementRef;
 
-  @Input() private mapType: string = 'ROADMAP';
-  @Input() private multiplePlaces: boolean = false;
-  private mapOptions = {
+  private mapOptions: any = {
     center: new google.maps.LatLng(51.5073391, -0.1284288),
     zoom: 16,
-    mapTypeId: google.maps.MapTypeId['ROADMAP'],
-    mapTypeControl: true,
-    mapTypeControlOptions: {
-      style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-      position: google.maps.ControlPosition.LEFT_BOTTOM
-    }
+    mapTypeControl: true
   };
   private mapInstance: any;
   private mapSearchBox: any;
   private markers: any[] = [];
   private infoWindow: any = null;
   private selectedLocations: any[] = [];
-  @Output() private mapClick: EventEmitter = new EventEmitter();
-  @Output() private markerClick: EventEmitter = new EventEmitter();
-  @Output() private locationSelected: EventEmitter = new EventEmitter();
   constructor() {
     console.log('Initializing Map');
   }
   public ngOnInit() {
+    this.mapOptions.mapTypeId = google.maps.MapTypeId[this.mapType];
+    this.mapOptions.mapTypeControlOptions = {
+      style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+      position: google.maps.ControlPosition.LEFT_BOTTOM
+    };
     this.mapInstance = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
     this.initMap();
   }
@@ -55,8 +58,8 @@ export class NgxGoogleMapComponent implements OnInit {
   private addDoneButton() {
     const controlUI: any = this.doneButton.nativeElement;
     controlUI.index = 1;
-    controlUI.addEventListener('click', () => {
-      this.locationSelected.emit(this.selectedLocations as any);
+    controlUI.addEventListener('click', (event: any) => {
+      this.locationSelected.emit({ event, locations: this.selectedLocations });
       console.log(this.selectedLocations);
     });
     this.mapInstance.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlUI);
@@ -116,7 +119,7 @@ export class NgxGoogleMapComponent implements OnInit {
   private addSearchBox() {
     this.mapSearchBox = new google.maps.places.SearchBox(this.searchInput.nativeElement);
     this.mapInstance.controls[google.maps.ControlPosition.TOP_LEFT]
-    .push(this.searchInput.nativeElement);
+      .push(this.searchInput.nativeElement);
     this.addSearchEvent();
   }
 
