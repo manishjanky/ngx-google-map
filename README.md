@@ -14,11 +14,19 @@
 
 * [demo-page](https://manishjanky.github.io/ngx-google-map-demo/)
 
+##Features
+
+* Click to add marker
+* Drag marker to select a location
+* Satellite/Map view
+* Zoom in / Zoom out
+* Search a location
+* Toogle fullscreen mode on/off
+
 ## Installation
 
 * `npm install ngx-google-map`
-* include google maps scripts and styles in you `angular-cli.json` to be build of your build process.
-* or include in in your index.html 
+* include google maps scripts in your index.html 
 
 `````
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
