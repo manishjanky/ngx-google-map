@@ -14,7 +14,7 @@
 
 * [demo-page](https://manishjanky.github.io/ngx-google-map-demo/)
 
-##Features
+## Features
 
 * Click to add marker
 * Drag marker to select a location
@@ -22,6 +22,7 @@
 * Zoom in / Zoom out
 * Search a location
 * Toogle fullscreen mode on/off
+* Responsive
 
 ## Installation
 
@@ -66,8 +67,8 @@ class YourModule { ... }
 
 ### Input
 
-* `mapType: string` - type of map that you want to be created.
-* `multiplePlaces: boolean` - property whether user can select multiple places on the map.
+* `mapType: string` - type of map that you want to be created defaults to `ROADMAP`.
+* `multiplePlaces: boolean` - property whether user can select multiple places on the map defaults to `false`.
 
 ### Output
 
