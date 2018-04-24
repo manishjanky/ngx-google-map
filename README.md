@@ -29,7 +29,7 @@
 * include google maps scripts in your index.html 
 
 `````
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry,places"></script>
 `````
 
 ### For webpack and tsc builds/ angular-cli builds
